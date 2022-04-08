@@ -1,0 +1,50 @@
+---
+  title: "Applied Stats II Project"
+author: "Zhenzhao Tu"
+date: "3/6/2022"
+output:
+  html_document:
+  toc: yes
+df_print: paged
+pdf_document:
+  toc: yes
+---
+
+# Import the dataset
+
+```{r, error = TRUE}
+covid = read.csv("Covid_data.csv")
+covid
+```
+
+```{r, error=TRUE}
+last_day = covid[covid$Date == '2022-02-04', ]
+last_day
+```
+
+```{r, error=TRUE}
+library(dplyr)
+desc_tot_case = last_day %>% arrange(desc(Total.cases))
+
+country <- desc_tot_case[["Country"]]
+tot_case <- desc_tot_case[["Total.cases"]]
+
+head_coun = head(country, 10)
+head_case = head(tot_case, 10)
+
+barplot(head_case, names.arg = head_coun)
+
+```
+
+```{r, error=TRUE}
+us = covid[covid$Country == 'US', ]
+us['days'] <- c(1:745)
+us
+``` 
+
+```{r, error=TRUE}
+tot_death <- lm(Total.deaths ~ days, data = us)
+plot(Total.deaths ~ days, data = us, pch = 1)
+abline(tot_death)
+summary(tot_death)
+``` 
