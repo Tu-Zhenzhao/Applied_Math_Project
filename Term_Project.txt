@@ -1,0 +1,31 @@
+TERM PROJECT
+
+Introduction:
+
+From a mathematical point of view, statistics is simply a collection of analytical tools used to make insights into data. It is assumed that working statisticians have a broad knowledge of these tools and understand their mathematical underpinnings. Up until this point has been the goal was to introduce you to such tools and develop your mathematical intuition to understand how they work. Working with data is however frequently the easiest part of a statistician’s job. How you convey your findings to others is a key component of any good statistician. The goal of this project is to practice explaining the data, the methods used, and the outcomes or inferences of your research.
+
+ 
+
+Instructions:
+
+You are to work alone on this project, using only your texts and notes. You can ask questions of either  Lab Instructor or myself. (No outside help) The project can be of any data set of your choice, several examples of research topics for the term project along with their samples of data sets are included in the Term Project folder on Canvas. The format of the project is of your choice but must be aesthetically pleasing, should include the following sections (not inclusive or exhaustive), introduction, research on topic, methods used, statistical setup and model derivation, analysis of the results, conclusions of findings, and appendix of any code which you used to solve the problem. Remember that when you are writing this paper especially the summary of your findings you should describe them in the context of a practical situation and written for an audience of non-statisticians. The write-up should be clear, concise, well organized, and grammatically correct. In my opinion, the most important part of technical writing is making the problem in which you are addressing clear (and important-sounding) and giving a concise and insightful solution.
+
+ 
+
+By submitting this assignment, you are representing that it is your own work and that you have followed the rules associated with the assignment. Incidents of academic misconduct (including cheating, plagiarizing, research misconduct, misrepresenting one’s own work, and /or inappropriately collaborating on an assignment) will be treated and dealt with in accordance with the Student Code
+
+(http://www.regulations.utah.edu/academics/6-400.html)
+
+ 
+
+ 
+
+Grading
+
+Your final project grade will be determined as follows.
+
+10% Set up, Introduction / Research
+15% Grammar and Organization
+15 % Aesthetics (Pictures, overall appearance, etc.)
+50 % Solution and Analysis
+10 % Organization of Code

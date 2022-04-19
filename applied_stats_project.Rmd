@@ -68,10 +68,13 @@ head_coun
 head_case
 
 sum_ten = covid[covid$Country%in%head_coun, ]
-
 ```
 
 ```{r, error=TRUE}
-head_coun[-1]
+aov_test = aov(Total.cases ~ Country, data = sum_ten)
+summary(aov_test)
+```
 
+```{r, error=TRUE}
+boxplot(Total.cases ~ Country, data = sum_ten)
 ```
