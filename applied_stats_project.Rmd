@@ -48,3 +48,30 @@ plot(Total.deaths ~ days, data = us, pch = 1)
 abline(tot_death)
 summary(tot_death)
 ``` 
+
+```{r, error=TRUE}
+library(forecast)
+
+plot(Total.cases ~ days, data = us, type='l')
+
+fit <- auto.arima(us$Total.cases)
+
+pred = forecast(fit, 50)
+
+plot(pred, type='l')
+
+summary(fit)
+```
+
+```{r, error=TRUE}
+head_coun
+head_case
+
+sum_ten = covid[covid$Country%in%head_coun, ]
+
+```
+
+```{r, error=TRUE}
+head_coun[-1]
+
+```
