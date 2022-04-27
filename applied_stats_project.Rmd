@@ -24,15 +24,20 @@ last_day
 
 ```{r, error=TRUE}
 library(dplyr)
+#library(poweRlaw)
 desc_tot_case = last_day %>% arrange(desc(Total.cases))
-
+#desc_tot_case['rate'] = desc_tot_case['Total.deaths']/desc_tot_case['Total.cases']
 country <- desc_tot_case[["Country"]]
 tot_case <- desc_tot_case[["Total.cases"]]
 
-head_coun = head(country, 10)
-head_case = head(tot_case, 10)
+head_coun = head(country, 30)
+head_case = head(tot_case, 30)
 
-barplot(head_case, names.arg = head_coun)
+barplot(head_case, names.arg = head_coun, las=2)
+#desc_tot_case
+
+#aov_test = aov(rate ~ Country, data = head(desc_tot_case, 100))
+#summary(aov_test)
 
 ```
 
@@ -41,11 +46,85 @@ us = covid[covid$Country == 'US', ]
 us['days'] <- c(1:745)
 us
 ``` 
+```{r, error=TRUE}
+mo_rate = last_day['Total.deaths']/last_day['Total.cases']
+#mo_rate['days'] <- c(1:280)
+mo_rate['Country'] = last_day['Country']
+mo_rate[mo_rate$Total.deaths < 0.03 & mo_rate$Total.deaths != 0, ]
+#mo_rate[mo_rate$Total.deaths != 0.0000000000, ]
+#plot(mo_rate$days, mo_rate$Total.deaths)
+#lm_test = lm(mo_rate$Total.deaths ~ mo_rate$days)
+#summary(lm_test)
+#na.omit(mo_rate)
+#mo_rate
+aov_test = aov(Total.deaths ~ Country, data = head(mo_rate, 10))
+summary(aov_test)
+```
 
 ```{r, error=TRUE}
-tot_death <- lm(Total.deaths ~ days, data = us)
-plot(Total.deaths ~ days, data = us, pch = 1)
-abline(tot_death)
+head_new = head(us$New.cases, 600)
+head_day = head(us$days, 600)
+
+tail_new = tail(us$New.cases, 150)
+tail_day = tail(us$days, 150)
+
+new_case = lm(New.cases ~ days, data = us)
+plot(New.cases ~ days, data = us)
+abline(new_case, col = 'red', lwd=3)
+abline(v = 600, col="blue", lwd=3, lty=2)
+summary(new_case)
+
+new_case_600 = lm(head_new ~ head_day)
+plot(head_new ~ head_day)
+abline(new_case_600)
+summary(new_case_600)
+
+new_case_150 = lm(tail_new ~ tail_day)
+plot(tail_new ~ tail_day)
+abline(new_case_150)
+summary(new_case_150)
+
+```
+```{r, error = TRUE}
+coef_stderr <- function(...) {
+  sqrt(diag(vcov(...)))
+}
+
+deg_free <- function(fit) {
+  n <- length(resid(fit))
+  k <- length(coef(fit))
+  n - k
+}
+
+coef_conf_int <- function(fit, conf.level = 0.95) {
+  beta <- coef(fit)
+  se <- coef_stderr(fit)
+  nu <- deg_free(fit)
+  tstar <- qt((1 - conf.level) / 2, df = nu, lower.tail = FALSE)
+  moe <- se * tstar
+  cbind(lower = beta - moe, upper = beta + moe)
+}
+```
+
+```{r, error = TRUE}
+coef_tstat <- function(fit, beta0 = 0) {
+  se <- coef_stderr(fit)
+  beta <- coef(fit)
+  (beta - beta0) / se
+}
+
+coef_conf_int(tot_death)
+pt(coef_tstat(tot_death, beta0 = 0.01396)[2], df = deg_free(tot_death))
+```
+
+
+
+
+
+```{r, error=TRUE}
+tot_death <- lm(Total.deaths ~ Total.cases, data = us)
+plot(Total.deaths ~ Total.cases, data = us, pch = 1)
+abline(tot_death, col="red", lwd=3)
 summary(tot_death)
 ``` 
 
@@ -57,7 +136,7 @@ plot(Total.cases ~ days, data = us, type='l')
 fit <- auto.arima(us$Total.cases)
 
 pred = forecast(fit, 50)
-
+checkresiduals(fit)
 plot(pred, type='l')
 
 summary(fit)
@@ -77,4 +156,8 @@ summary(aov_test)
 
 ```{r, error=TRUE}
 boxplot(Total.cases ~ Country, data = sum_ten)
+
+901391/76354040
+
+
 ```
